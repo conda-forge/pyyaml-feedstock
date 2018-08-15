@@ -1,7 +1,7 @@
 {% set name = "PyYAML" %}
 {% set version = "3.12" %}
 {% set sha256 = "592766c6303207a20efc445587778322d7f73b161bd994f227adaa341ba212ab" %}
-{% set build = 1 %}
+{% set build = 2 %}
 
 
 package:
@@ -23,6 +23,8 @@ build:
 
 requirements:
   build:
+    - {{ compiler('c') }}
+  host:
     - python
     - yaml
 
@@ -47,5 +49,6 @@ about:
 extra:
   recipe-maintainers:
     - jakirkham
+    - jjhelmus
     - msarahan
     - pelson
