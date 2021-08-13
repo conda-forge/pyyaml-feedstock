@@ -11,13 +11,15 @@ source:
     - 0001-Ensure-we-do-not-end-up-wih-CRLF-line-endings-on-tes.patch
     # Can be removed if https://github.com/yaml/pyyaml/pull/542 is merged
     - 0002-Close-resources.patch
+    - 0003-Lowercase-cython.patch
 
 build:
   number: 1
+  script_env:
+    - PYYAML_FORCE_LIBYAML=1
+    - PYYAML_FORCE_CYTHON=1  # [python_impl == "cpython"]
   script:
-    - python setup.py --with-libyaml build_ext --include-dirs="${PREFIX}/include" --library-dirs="${PREFIX}/lib"  # [unix]
-    - python setup.py --with-libyaml build_ext --include-dirs="%LIBRARY_INC%" --library-dirs="%LIBRARY_LIB%"      # [win]
-    - python setup.py install
+    - python -m pip install .
     - python setup.py test
 
 requirements:
@@ -27,10 +29,13 @@ requirements:
     - cython                                 # [build_platform != target_platform]
     - {{ compiler('c') }}
   host:
-    - python
+    - build
     - cython
+    - pip
     - setuptools
+    - wheel
     - yaml
+    - python
   run:
     - python
     - yaml
