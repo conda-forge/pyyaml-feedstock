@@ -9,9 +9,11 @@ source:
   sha256: 607774cbba28732bfa802b54baa7484215f530991055bb562efbed5b2f20a45e
   patches:
     - 0001-Ensure-we-do-not-end-up-wih-CRLF-line-endings-on-tes.patch
+    # Can be removed if https://github.com/yaml/pyyaml/pull/542 is merged
+    - 0002-Close-resources.patch
 
 build:
-  number: 0
+  number: 1
   script:
     - python setup.py --with-libyaml build_ext --include-dirs="${PREFIX}/include" --library-dirs="${PREFIX}/lib"  # [unix]
     - python setup.py --with-libyaml build_ext --include-dirs="%LIBRARY_INC%" --library-dirs="%LIBRARY_LIB%"      # [win]
