@@ -17,7 +17,7 @@ build:
   number: 1
   script_env:
     - PYYAML_FORCE_LIBYAML=1
-    - PYYAML_FORCE_CYTHON=1  # [build_platform != target_platform]
+    - PYYAML_FORCE_CYTHON=1  # [python_impl == "cpython"]
   script:
     - python -m pip install .
     - python setup.py test
