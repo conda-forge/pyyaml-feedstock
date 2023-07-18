@@ -1,4 +1,4 @@
-{% set version = "6.0" %}
+{% set version = "6.0.1" %}
 
 package:
   name: pyyaml
@@ -6,22 +6,16 @@ package:
 
 source:
   url: https://pypi.io/packages/source/P/PyYAML/PyYAML-{{ version }}.tar.gz
-  sha256: 68fb519c14306fec9720a2a5b45bc9f0c8d1b9c72adf45c37baedfcd949c35a2
+  sha256: bfdf460b1736c775f2ba9f6a92bca30bc2095067b8a9d77876d1fad6cc3b4a43
   patches:
     - 0001-Ensure-we-do-not-end-up-wih-CRLF-line-endings-on-tes.patch
     - 0002-remove-setuptools-use-distutils-py38.patch  # [py<39]
 
 build:
-  number: 5
+  number: 0
   script:
     - >-
-        "{{ PYTHON }}" -m pip install .
-        --global-option="--with-libyaml"
-        --global-option="build_ext"
-        --global-option="-I${PREFIX}/include"  # [unix]
-        --global-option="-L${PREFIX}/lib"      # [unix]
-        --global-option="-I%LIBRARY_INC%"      # [win]
-        --global-option="-L%LIBRARY_LIB%"      # [win]
+      "{{ PYTHON }}" -m pip install . --global-option="--with-libyaml" --global-option="build_ext" --global-option="-I${PREFIX}/include"  # [unix] --global-option="-L${PREFIX}/lib"      # [unix] --global-option="-I%LIBRARY_INC%"      # [win] --global-option="-L%LIBRARY_LIB%"      # [win]
 
 requirements:
   build:
