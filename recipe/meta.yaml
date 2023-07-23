@@ -16,12 +16,12 @@ build:
   script:
     - >-
         "{{ PYTHON }}" -m pip install .
-        --global-option="--with-libyaml"
-        --global-option="build_ext"
-        --global-option="-I${PREFIX}/include"  # [unix]
-        --global-option="-L${PREFIX}/lib"      # [unix]
-        --global-option="-I%LIBRARY_INC%"      # [win]
-        --global-option="-L%LIBRARY_LIB%"      # [win]
+        --config-settings="--with-libyaml"
+        --config-settings="build_ext"
+        --config-settings="-I${PREFIX}/include"  # [unix]
+        --config-settings="-L${PREFIX}/lib"      # [unix]
+        --config-settings="-I%LIBRARY_INC%"      # [win]
+        --config-settings="-L%LIBRARY_LIB%"      # [win]
 
 requirements:
   build:
