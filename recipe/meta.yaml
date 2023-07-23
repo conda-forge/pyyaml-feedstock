@@ -13,15 +13,7 @@ source:
 
 build:
   number: 0
-  script:
-    - >-
-        "{{ PYTHON }}" -m pip install .
-        --config-settings="--with-libyaml"
-        --config-settings="build_ext"
-        --config-settings="-I${PREFIX}/include"  # [unix]
-        --config-settings="-L${PREFIX}/lib"      # [unix]
-        --config-settings="-I%LIBRARY_INC%"      # [win]
-        --config-settings="-L%LIBRARY_LIB%"      # [win]
+  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   build:
@@ -31,7 +23,7 @@ requirements:
     - {{ compiler('c') }}
   host:
     - python
-    - cython
+    - cython <3.0
     - setuptools
     - pip
     - yaml
