@@ -1,38 +1,32 @@
-{% set version = "6.0.1" %}
+{% set version = "6.0.2" %}
 
 package:
   name: pyyaml
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/P/PyYAML/PyYAML-{{ version }}.tar.gz
-  sha256: bfdf460b1736c775f2ba9f6a92bca30bc2095067b8a9d77876d1fad6cc3b4a43
+  url: https://pypi.io/packages/source/P/PyYAML/pyyaml-{{ version }}.tar.gz
+  sha256: d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e
   patches:
     - 0001-Ensure-we-do-not-end-up-wih-CRLF-line-endings-on-tes.patch
     - 0002-remove-setuptools-use-distutils-py38.patch  # [py<39]
 
 build:
-  number: 1
-  script:
-    - >
-      "{{ PYTHON }}" -m pip install .
-      --global-option="--with-libyaml"
-      --global-option="build_ext"
-      --global-option="-I${PREFIX}/include"  # [unix]
-      --global-option="-L${PREFIX}/lib"      # [unix]
-      --global-option="-I%LIBRARY_INC%"      # [win]
-      --global-option="-L%LIBRARY_LIB%"      # [win]
+  number: 0
+  skip: true  # [py<38]
 
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - cython <3.0.0                          # [build_platform != target_platform]
+    - cython                                 # [build_platform != target_platform]
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
   host:
     - python
-    - cython <3.0.0  # https://github.com/yaml/pyyaml/issues/601
+    - cython
     - setuptools
+    - packaging
     - pip
     - yaml
   run:
