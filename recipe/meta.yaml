@@ -12,7 +12,7 @@ source:
     - 0002-remove-setuptools-use-distutils-py38.patch  # [py<39]
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<38]
 
 requirements:
