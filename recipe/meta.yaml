@@ -5,7 +5,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/P/PyYAML/pyyaml-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/P/PyYAML/pyyaml-{{ version }}.tar.gz
   sha256: d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e
   patches:
     - 0001-Ensure-we-do-not-end-up-wih-CRLF-line-endings-on-tes.patch
@@ -47,6 +47,7 @@ test:
     - pip check  # [not (win and python_impl == 'pypy')]
   requires:
     - pip
+    - python {{ python_min }}.*     # [use_noarch]
 
 about:
   home: http://pyyaml.org/wiki/PyYAML
