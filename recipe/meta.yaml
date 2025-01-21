@@ -16,7 +16,7 @@ build:
   skip: true  # [py<38]
   noarch: python   # [use_noarch]
   track_features:
-    - pyyaml_no_libyaml    # [use_noarch]
+    - pyyaml_no_compile    # [use_noarch]
 
 requirements:
   build:
