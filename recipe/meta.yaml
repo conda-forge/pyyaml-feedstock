@@ -12,8 +12,11 @@ source:
     - 0002-remove-setuptools-use-distutils-py38.patch  # [py<39]
 
 build:
-  number: 1
+  number: 2
   skip: true  # [py<38]
+  noarch: python   # [use_noarch]
+  track_features:
+    - pyyaml_no_libyaml    # [use_noarch]
 
 requirements:
   build:
@@ -23,20 +26,22 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
   host:
-    - python
+    - python                        # [not use_noarch]
+    - python {{ python_min }}.*     # [use_noarch]
     - cython
     - setuptools
     - packaging
     - pip
     - yaml
   run:
-    - python
+    - python                        # [not use_noarch]
+    - python >={{ python_min }}.*   # [use_noarch]
     - yaml
 
 test:
   imports:
     - yaml
-    - _yaml   # [python_impl == "cpython"]
+    - _yaml   # [python_impl == "cpython" and not use_noarch]
   commands:
     # temporarily skipping pip check on win and pypy build because of bizarre tqdm issue
     - pip check  # [not (win and python_impl == 'pypy')]
