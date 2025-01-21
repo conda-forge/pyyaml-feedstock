@@ -5,15 +5,18 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/P/PyYAML/pyyaml-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/P/PyYAML/pyyaml-{{ version }}.tar.gz
   sha256: d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e
   patches:
     - 0001-Ensure-we-do-not-end-up-wih-CRLF-line-endings-on-tes.patch
     - 0002-remove-setuptools-use-distutils-py38.patch  # [py<39]
 
 build:
-  number: 1
+  number: 2
   skip: true  # [py<38]
+  noarch: python   # [use_noarch]
+  track_features:
+    - pyyaml_no_compile    # [use_noarch]
 
 requirements:
   build:
@@ -23,25 +26,28 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
   host:
-    - python
+    - python                        # [not use_noarch]
+    - python {{ python_min }}.*     # [use_noarch]
     - cython
     - setuptools
     - packaging
     - pip
     - yaml
   run:
-    - python
+    - python                        # [not use_noarch]
+    - python >={{ python_min }}.*   # [use_noarch]
     - yaml
 
 test:
   imports:
     - yaml
-    - _yaml   # [python_impl == "cpython"]
+    - _yaml   # [python_impl == "cpython" and not use_noarch]
   commands:
     # temporarily skipping pip check on win and pypy build because of bizarre tqdm issue
     - pip check  # [not (win and python_impl == 'pypy')]
   requires:
     - pip
+    - python {{ python_min }}.*     # [use_noarch]
 
 about:
   home: http://pyyaml.org/wiki/PyYAML
