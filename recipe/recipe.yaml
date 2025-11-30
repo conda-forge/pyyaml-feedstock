@@ -1,0 +1,75 @@
+context:
+  version: 6.0.3
+
+package:
+  name: pyyaml
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/P/PyYAML/pyyaml-${{ version }}.tar.gz
+  sha256: d76623373421df22fb4cf8817020cbb7ef15c725b9d5e45f17e189bfc384190f
+
+build:
+  number: 1
+  # skip: true  # [py<38] lost completely, b/c python_min==3.10
+  noarch: ${{ "python" if use_noarch }} # [use_noarch]
+  variant:
+    use_keys:
+      - use_noarch
+    down_prioritize_variant: ${{ 1 if use_noarch else 0 }} # track_features: - pyyaml_no_compile    # [use_noarch]
+
+requirements:
+  build:
+    - if: build_platform != target_platform # [build_platform != target_platform]
+      then:
+        - python
+        - cross-python_${{ target_platform }}
+        - cython
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+
+  host:
+    - if: use_noarch
+      then:
+        - python ${{ python_min }}.*    # [use_noarch]
+      else:
+        - python                        # [not use_noarch]
+    - cython
+    - setuptools
+    - packaging
+    - pip
+    - yaml
+
+  run:
+    - if: use_noarch
+      then:
+        - python                       # [not use_noarch]
+      else:
+        - python >=${{ python_min }}   # [use_noarch]
+    - yaml
+
+tests:
+  - python:
+      imports:
+        - yaml
+        - if: python_impl == "cpython" and not use_noarch # [python_impl == "cpython" and not use_noarch]
+          then: _yaml
+      # temporarily skipping pip check on win and pypy build because of bizarre tqdm issue
+      pip_check: ${{ true if not (win and python_impl == 'pypy') else false }} # [not (win and python_impl == 'pypy')]
+      python_version: ${{ python_min + ".*" if use_noarch }} # [use_noarch]
+
+about:
+  homepage: http://pyyaml.org/wiki/PyYAML
+  license_file: LICENSE
+  license: MIT
+  license_family: MIT
+  summary: YAML parser and emitter for Python
+  repository: https://github.com/yaml/pyyaml
+  documentation: http://pyyaml.org/wiki/PyYAML
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - msarahan
+    - pelson
+    - ocefpaf
