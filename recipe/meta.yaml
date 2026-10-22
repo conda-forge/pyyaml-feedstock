@@ -12,7 +12,7 @@ source:
     - 0002-remove-setuptools-use-distutils-py38.patch  # [py<39]
 
 build:
-  number: 1
+  number: 2
   skip: true  # [py<38]
   noarch: python  # [use_noarch]
   track_features:
