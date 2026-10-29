@@ -5,14 +5,14 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/P/PyYAML/pyyaml-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/source/P/PyYAML/pyyaml-{{ version }}.tar.gz
   sha256: d76623373421df22fb4cf8817020cbb7ef15c725b9d5e45f17e189bfc384190f
   patches:
     - 0001-Ensure-we-do-not-end-up-wih-CRLF-line-endings-on-tes.patch
     - 0002-remove-setuptools-use-distutils-py38.patch  # [py<39]
 
 build:
-  number: 1
+  number: 2
   skip: true  # [py<38]
   noarch: python  # [use_noarch]
   track_features:
