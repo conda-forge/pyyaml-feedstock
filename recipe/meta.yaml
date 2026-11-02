@@ -48,6 +48,7 @@ test:
   requires:
     - pip
     - python {{ python_min }}.*     # [use_noarch]
+    - {{ pin_subpackage("pyyaml", exact=True) }}
 
 about:
   home: http://pyyaml.org/wiki/PyYAML
