@@ -12,12 +12,9 @@ source:
   sha256: d76623373421df22fb4cf8817020cbb7ef15c725b9d5e45f17e189bfc384190f
   patches:
     - 0001-Ensure-we-do-not-end-up-wih-CRLF-line-endings-on-tes.patch
-    - if: match(python, "<3.9")
-      then: 0002-remove-setuptools-use-distutils-py38.patch
 
 build:
   number: 4
-  skip: match(python, "<3.8")
   noarch: ${{ 'python' if use_noarch }}
   variant:
     use_keys:
@@ -55,7 +52,7 @@ tests:
   - python:
       imports:
         - yaml
-        - if: python_impl == "cpython" and not use_noarch
+        - if: not use_noarch
           then: _yaml
       pip_check: false
       python_version:
