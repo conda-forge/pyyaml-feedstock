@@ -24,28 +24,25 @@ build:
 requirements:
   build:
     - if: build_platform != target_platform
-      then: python
-    - if: build_platform != target_platform
-      then: cross-python_${{ target_platform }}
-    - if: build_platform != target_platform
-      then: cython
+      then:
+        - cross-python_${{ target_platform }}
+        - python
+        - cython
     - ${{ compiler('c') }}
     - ${{ stdlib("c") }}
   host:
-    - if: not use_noarch
-      then: python
     - if: use_noarch
       then: python ${{ python_min }}.*
+      else: python
     - cython
     - setuptools
     - packaging
     - pip
     - yaml
   run:
-    - if: not use_noarch
-      then: python
     - if: use_noarch
       then: python >=${{ python_min }}
+      else: python
     - yaml
 
 tests:
