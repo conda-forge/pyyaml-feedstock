@@ -16,7 +16,7 @@ source:
       then: 0002-remove-setuptools-use-distutils-py38.patch
 
 build:
-  number: 3
+  number: 4
   skip: match(python, "<3.8")
   noarch: ${{ 'python' if use_noarch }}
   variant:
