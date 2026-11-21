@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "6.0.3"
+  version: "6.0.4"
 
 package:
   name: pyyaml
@@ -9,12 +9,12 @@ package:
 
 source:
   url: https://files.pythonhosted.org/packages/source/P/PyYAML/pyyaml-${{ version }}.tar.gz
-  sha256: d76623373421df22fb4cf8817020cbb7ef15c725b9d5e45f17e189bfc384190f
+  sha256: e24bf71af8a432d7808fabff134d38dfe16d3cbb41f2873bb4b1e42422de0a1a
   patches:
     - 0001-Ensure-we-do-not-end-up-wih-CRLF-line-endings-on-tes.patch
 
 build:
-  number: 4
+  number: 0
   noarch: ${{ 'python' if use_noarch }}
   variant:
     use_keys:
